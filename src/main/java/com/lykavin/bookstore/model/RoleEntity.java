@@ -11,13 +11,13 @@ import java.util.Collection;
 public class RoleEntity {
 
     private int roleId;
-
     private String name;
 
 
     private Collection<UserEntity> users;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getRoleId() {
         return roleId;
     }

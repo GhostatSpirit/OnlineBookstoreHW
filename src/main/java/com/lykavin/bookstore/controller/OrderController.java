@@ -73,17 +73,17 @@ public class OrderController {
         return "admin/orderOps/updateOrder";
     }
 
-    @RequestMapping(value="/updateP", method = RequestMethod.POST)
-    public String updateOrderPost(@ModelAttribute("order") @Valid OrderEntity order, BindingResult result){
-        if(!result.hasErrors()){
-            if(!order.equals(orderRepo.findOne(order.getOid()))) {
-                orderRepo.updateOrder(order.getUserByUid().getUid(), order.getBookByBid().getBid(),
-                        order.getQuantity(), order.getOid());
-                orderRepo.flush();
-            }
-        }
-        return "redirect:/admin/orders";
-    }
+//    @RequestMapping(value="/updateP", method = RequestMethod.POST)
+//    public String updateOrderPost(@ModelAttribute("order") @Valid OrderEntity order, BindingResult result){
+//        if(!result.hasErrors()){
+//            if(!order.equals(orderRepo.findOne(order.getOid()))) {
+//                orderRepo.updateOrder(order.getUserByUid().getUid(), order.getBookByBid().getBid(),
+//                        order.getQuantity(), order.getOid());
+//                orderRepo.flush();
+//            }
+//        }
+//        return "redirect:/admin/orders";
+//    }
 
     @RequestMapping(value="/delete/{id}")
     public String deleteBlog(@PathVariable("id") int id){

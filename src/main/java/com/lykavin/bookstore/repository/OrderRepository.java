@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
-    @Modifying
-    @Transactional
-    @Query("update OrderEntity newOrder " +
-            "set newOrder.userByUid.uid=:qUid, newOrder.bookByBid.bid=:qBid, newOrder.quantity=:qQuantity " +
-            "where newOrder.oid=:qOid")
-    void updateOrder(@Param("qUid") int uid, @Param("qBid") int bid,
-                     @Param("qQuantity") int quantity, @Param("qOid") int oid);
+//    @Modifying
+//    @Transactional
+//    @Query("update OrderEntity newOrder " +
+//            "set newOrder.userByUid.uid=:qUid, newOrder.bookByBid.bid=:qBid, newOrder.quantity=:qQuantity " +
+//            "where newOrder.oid=:qOid")
+//    void updateOrder(@Param("qUid") int uid, @Param("qBid") int bid,
+//                     @Param("qQuantity") int quantity, @Param("qOid") int oid);
 
 }

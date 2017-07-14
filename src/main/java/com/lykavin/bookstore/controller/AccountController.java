@@ -53,8 +53,14 @@ public class AccountController {
         return prefix + "myAccount";
     }
 
-    @RequestMapping("/login")
-    public String login(Model model){
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String getLogin(Model model){
+        model.addAttribute("classActiveLogin", true);
+        return prefix + "myAccount";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String postLogin(Model model){
         model.addAttribute("classActiveLogin", true);
         return prefix + "myAccount";
     }

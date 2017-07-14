@@ -9,5 +9,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
+
+    String userRoleName = "ROLE_USER";
+    String adminRoleName = "ROLE_ADMIN";
+
+
     RoleEntity findByName(String name);
 }

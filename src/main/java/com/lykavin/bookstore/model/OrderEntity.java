@@ -39,7 +39,7 @@ public class OrderEntity {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "oid")
     public int getOid() {
         return oid;
@@ -75,7 +75,7 @@ public class OrderEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "uid", referencedColumnName = "uid")
+    @JoinColumn(name = "uid", referencedColumnName = "id")
     public UserEntity getUserByUid() {
         return userByUid;
     }

@@ -1,5 +1,7 @@
 package com.lykavin.bookstore.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -10,13 +12,45 @@ import java.util.Collection;
 @Entity
 @Table(name = "books", schema = "bookstore", catalog = "")
 public class BookEntity {
+
+    private long id;
+
     private String title;
-    private BigDecimal price;
-    private String description;
     private String author;
-    private String img;
-    private int bid;
+    private String publisher;
+
+    private String description;
+
+    private int listPrice;
+    private int ourPrice;
+    private int inStockNumber;
+
+    private String publicationDate;
+    private String language;
+    private String category;
+
+    private int numberOfPages;
+    private String format;
+    private int isbn;
+
+    private boolean active = true;
+
+
+    private MultipartFile bookImage;
+
+
     private Collection<OrderEntity> ordersByBid;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bid")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long bid) {
+        this.id = bid;
+    }
 
     @Basic
     @Column(name = "title")
@@ -28,18 +62,8 @@ public class BookEntity {
         this.title = title;
     }
 
-    @Basic
-    @Column(name = "price")
-    public BigDecimal getPrice() {
-        return price;
-    }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    @Basic
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "text")
     public String getDescription() {
         return description;
     }
@@ -58,51 +82,103 @@ public class BookEntity {
         this.author = author;
     }
 
-    @Basic
-    @Column(name = "img")
-    public String getImg() { return img ; }
-
-    public void setImg(String img) { this.img = img; }
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "bid")
-    public int getBid() {
-        return bid;
+    @Transient
+    public MultipartFile getBookImage() {
+        return bookImage;
     }
 
-    public void setBid(int bid) {
-        this.bid = bid;
+    public void setBookImage(MultipartFile bookImage) {
+        this.bookImage = bookImage;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        BookEntity that = (BookEntity) o;
-
-        if (bid != that.bid) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (author != null ? !author.equals(that.author) : that.author != null) return false;
-        if (img != null ? !img.equals(that.img) : that.img != null) return false;
-
-        return true;
+    public String getPublisher() {
+        return publisher;
     }
 
-    @Override
-    public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (img != null ? img.hashCode() : 0);
-        result = 31 * result + bid;
-        return result;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
+
+    public int getListPrice() {
+        return listPrice;
+    }
+
+    public void setListPrice(int listPrice) {
+        this.listPrice = listPrice;
+    }
+
+    public int getOurPrice() {
+        return ourPrice;
+    }
+
+    public void setOurPrice(int ourPrice) {
+        this.ourPrice = ourPrice;
+    }
+
+    public int getInStockNumber() {
+        return inStockNumber;
+    }
+
+    public void setInStockNumber(int inStockNumber) {
+        this.inStockNumber = inStockNumber;
+    }
+
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public int getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(int isbn) {
+        this.isbn = isbn;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
 
     @OneToMany(mappedBy = "bookByBid")
     public Collection<OrderEntity> getOrdersByBid() {

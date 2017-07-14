@@ -15,15 +15,15 @@ import java.math.BigDecimal;
  */
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Integer> {
-
-    @Modifying
-    @Transactional
-    @Query("update BookEntity book " +
-            "set book.title=:qTitle, book.price=:qPrice, " +
-            "book.description=:qDescription, book.author=:qAuthor, " +
-            "book.img=:qImg " +
-            "where book.bid=:qBid")
-    void updateBook(@Param("qTitle") String title, @Param("qPrice") BigDecimal price,
-                    @Param("qDescription") String description, @Param("qAuthor") String author,
-                    @Param("qImg") String img, @Param("qBid") Integer bid);
+//
+//    @Modifying
+//    @Transactional
+//    @Query("update BookEntity book " +
+//            "set book.title=:qTitle, book.price=:qPrice, " +
+//            "book.description=:qDescription, book.author=:qAuthor, " +
+//            "book.img=:qImg " +
+//            "where book.bid=:qBid")
+//    void updateBook(@Param("qTitle") String title, @Param("qPrice") int price,
+//                    @Param("qDescription") String description, @Param("qAuthor") String author,
+//                    @Param("qImg") String img, @Param("qBid") Integer bid);
 }

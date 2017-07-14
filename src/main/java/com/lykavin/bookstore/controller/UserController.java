@@ -91,7 +91,7 @@ public class UserController {
         if(!result.hasErrors()) {
             // 更新用户信息
             userRepository.updateUser(user.getEmail(), user.getPassword(),
-                    user.getName(), user.getPhone(), user.getAddress(), user.getUid());
+                    user.getName(), user.getPhone(), user.getAddress(), user.getId());
             userRepository.flush(); // 刷新缓冲区
         }
 
