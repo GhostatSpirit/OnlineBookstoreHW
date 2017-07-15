@@ -43,15 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/img/**",
             "/",
             "/myAccount",
-            "/newUser"
+            "/newUser",
+            "/forgetPassword"
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                .antMatchers(PUBLIC_MATCHERS)
-                .permitAll();
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .anyRequest().permitAll();
+                //.anyRequest().authenticated();
+
 
         http
                 .csrf().disable()

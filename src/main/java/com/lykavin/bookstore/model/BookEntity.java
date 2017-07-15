@@ -31,7 +31,7 @@ public class BookEntity {
 
     private int numberOfPages;
     private String format;
-    private int isbn;
+    private String isbn;
 
     private boolean active = true;
 
@@ -39,7 +39,7 @@ public class BookEntity {
     private MultipartFile bookImage;
 
 
-    private Collection<OrderEntity> ordersByBid;
+    private Collection<OrderEntity> orders;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,6 +103,7 @@ public class BookEntity {
         return listPrice;
     }
 
+    @Column(nullable = true)
     public void setListPrice(int listPrice) {
         this.listPrice = listPrice;
     }
@@ -111,6 +112,7 @@ public class BookEntity {
         return ourPrice;
     }
 
+    @Column(nullable = true)
     public void setOurPrice(int ourPrice) {
         this.ourPrice = ourPrice;
     }
@@ -119,6 +121,7 @@ public class BookEntity {
         return inStockNumber;
     }
 
+    @Column(nullable = true)
     public void setInStockNumber(int inStockNumber) {
         this.inStockNumber = inStockNumber;
     }
@@ -151,6 +154,7 @@ public class BookEntity {
         return numberOfPages;
     }
 
+    @Column(nullable = true)
     public void setNumberOfPages(int numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
@@ -163,11 +167,13 @@ public class BookEntity {
         this.format = format;
     }
 
-    public int getIsbn() {
+    // The length of ISBN-13 should be 14 (with a '-')
+    @Column(length = 15)
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -181,11 +187,11 @@ public class BookEntity {
 
 
     @OneToMany(mappedBy = "bookByBid")
-    public Collection<OrderEntity> getOrdersByBid() {
-        return ordersByBid;
+    public Collection<OrderEntity> getOrders() {
+        return orders;
     }
 
-    public void setOrdersByBid(Collection<OrderEntity> ordersByBid) {
-        this.ordersByBid = ordersByBid;
+    public void setOrders(Collection<OrderEntity> orders) {
+        this.orders = orders;
     }
 }

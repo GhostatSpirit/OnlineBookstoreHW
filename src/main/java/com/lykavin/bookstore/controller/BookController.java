@@ -2,24 +2,75 @@ package com.lykavin.bookstore.controller;
 
 import com.lykavin.bookstore.model.BookEntity;
 import com.lykavin.bookstore.repository.BookRepository;
+import com.lykavin.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 /**
  * Created by lykav on 2017/4/23.
  */
 @Controller
-@RequestMapping("/admin/books*")
+@RequestMapping("/admin/book")
 public class BookController {
+
+    @Autowired
+    BookService bookService;
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addBook(Model model, HttpServletRequest request){
+        BookEntity book = new BookEntity();
+        model.addAttribute("book", book);
+
+        String rpath = request.getSession().getServletContext().getRealPath("/");
+
+        return "/admin/book/add";
+    }
+
+    @RequestMapping(value="/add", method = RequestMethod.POST)
+    public String addBookPost(@ModelAttribute("book")BookEntity book, HttpServletRequest request){
+
+        System.out.println(book.toString());
+
+        bookService.save(book);
+
+        MultipartFile bookImage = book.getBookImage();
+        try{
+            byte[] bytes = bookImage.getBytes();
+            String name = book.getId() + ".png";
+            BufferedOutputStream stream = new BufferedOutputStream(
+                    new FileOutputStream(new File("src/main/resources/static/image/book/" + name))
+            );
+            stream.write(bytes);
+            stream.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "redirect:/admin/book/list";
+    }
+
+    @RequestMapping("/list")
+    public String bookList(Model model){
+        // List<BookEntity> bookList = bookService.findAll();
+        return "/admin/book/list";
+    }
+
 //
 //    @Autowired
 //    BookRepository bookRepository;

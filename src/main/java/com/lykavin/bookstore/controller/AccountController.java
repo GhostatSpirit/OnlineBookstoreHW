@@ -70,7 +70,6 @@ public class AccountController {
 
             Model model){
 
-
         model.addAttribute("classActiveForgetPassword", true);
         return prefix + "myAccount";
 
@@ -125,6 +124,7 @@ public class AccountController {
         mailSender.send(email);
 
         model.addAttribute("emailSent", "true");
+        model.addAttribute("newUser", user);
 
         return prefix + "myAccount";
 

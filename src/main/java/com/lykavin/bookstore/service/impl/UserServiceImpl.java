@@ -7,6 +7,8 @@ import com.lykavin.bookstore.repository.PasswordResetTokenRepository;
 import com.lykavin.bookstore.repository.RoleRepository;
 import com.lykavin.bookstore.repository.UserRepository;
 import com.lykavin.bookstore.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.Set;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    public static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
@@ -53,7 +57,8 @@ public class UserServiceImpl implements UserService {
     public UserEntity createUser(UserEntity user, Set<RoleEntity> userRoles) throws Exception{
         UserEntity localUser = userRepository.findByUsername(user.getUsername());
         if(localUser != null){
-            throw new Exception("user already exists. nothing will be done.");
+            LOG.info("user {} already exists. nothing will be done.", user.getName());;
+            // throw new Exception("user already exists. nothing will be done.");
         } else{
             for(RoleEntity role : userRoles){
 
@@ -62,7 +67,7 @@ public class UserServiceImpl implements UserService {
             user.setRoles(userRoles);
             localUser = userRepository.save(user);
 
-            return localUser;
         }
+        return localUser;
     }
 }

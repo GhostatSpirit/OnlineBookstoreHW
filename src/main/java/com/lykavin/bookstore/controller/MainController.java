@@ -2,6 +2,8 @@ package com.lykavin.bookstore.controller;
 
 import com.lykavin.bookstore.model.BookEntity;
 import com.lykavin.bookstore.repository.BookRepository;
+import com.lykavin.bookstore.repository.UserRepository;
+import com.lykavin.bookstore.utility.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,6 +21,7 @@ public class MainController {
 
     @Autowired
     BookRepository bookRepo;
+
 
     private static final int columnCount = 3;
 
