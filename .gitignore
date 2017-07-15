@@ -3,6 +3,8 @@
 # Customized Ignores
 # Ignore updated book images
 src/main/resources/static/image/book/
+# tinymce
+src/main/resources/static/js/tinymce
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm

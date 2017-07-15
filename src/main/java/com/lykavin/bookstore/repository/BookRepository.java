@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  * Created by lykav on 2017/4/23.
  */
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Integer> {
+public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //
 //    @Modifying
 //    @Transactional

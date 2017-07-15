@@ -2,10 +2,43 @@
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="common/adminHeader :: common-header" />
 
-
 <head>
     <div th:replace="common/adminHeader :: navbar" />
-    <h1>Book List Page</h1>
+
+    <div class="container">
+        <h1>Book List</h1>
+        <table id="bookListTable" class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>List Price</th>
+                    <th>Our Price</th>
+                    <th>Active?</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr data-th-each="book : ${bookList}">
+                <td ><a th:href="@{/admin/book/info(id=${book.id})}"><span th:text="${book.title}"></span></a></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.category}"></td>
+                <td> <span th:text="${#numbers.formatDecimal(book.listPrice / 100.0, 0, 'COMMA', 2, 'POINT') }">
+                        10.00
+                     </span>
+                </td>
+                <td> <span th:text="${#numbers.formatDecimal(book.ourPrice / 100.0, 0, 'COMMA', 2, 'POINT') }">
+                        10.00
+                     </span>
+                </td>
+                <td th:text="${book.active}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
     <div th:replace="common/adminHeader :: body-bottom-scripts" />
 </head>
 <body>

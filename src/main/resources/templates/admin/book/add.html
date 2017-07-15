@@ -191,7 +191,7 @@
 						<label class="col-md-2 control-label" for="description">Description</label>
 						<div class="col-md-8">
 							<textarea name="description" rows="5" class="form-control"
-								id="description" th:value="${book.description}"
+								id="description" th:value="${book.description}" th:text="${book.description}"
 								placeholder="Description" />
 							<span class="help-block">Description of the book</span>
 						</div>
@@ -212,7 +212,7 @@
 						<div class="col-md-2"></div>
 						<div class="col-md-8">
 							<button type="submit" class="btn btn-success">Add Book</button>
-							<a class="btn btn-danger" th:href="@{/admin}">Cancel</a>
+							<a class="btn btn-danger" th:href="@{/admin/book/list}">Cancel</a>
 						</div>
 					</div>
 				</fieldset>
@@ -222,5 +222,7 @@
 
 
 	<div th:replace="common/adminHeader :: body-bottom-scripts" />
+	<div th:replace="common/adminHeader :: body-bottom-tinymce" />
+
 </body>
 </html>
