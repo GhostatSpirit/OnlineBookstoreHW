@@ -24,7 +24,7 @@
          style="margin-top: -75px;"/>
 
 
-    <form th:action="@{/shoppingCart/addItem}" method="post">
+    <form th:action="@{/cart/add}" method="post">
         <input hidden="hidden" th:field="*{book.id}" />
         <div class="row" style="margin-top: 120px;">
             <div class="col-xs-3">
@@ -33,6 +33,9 @@
             </div>
 
             <div class="col-xs-9">
+                <h3><span th:if="${addBookSuccess}" style="color: forestgreen"><i class="fa fa-check" aria-hidden="true" style="color: forestgreen"></i>Added to cart.</span></h3>
+                <h3><span th:if="${notEnoughStock}" style="color: red">Oops, only <span th:text="${book.inStockNumber}"></span> In Stock.</span></h3>
+
                 <h3 th:text="${book.title}">Book Title</h3>
                 <div class="row">
                     <div class="col-xs-5">
@@ -59,7 +62,7 @@
                                             <!--</option>-->
                                         <!--</select>-->
                                         <input th:if="*{book.inStockNumber!=0}"
-                                               type="number" min="1" th:attr="max=${book.inStockNumber}" value="1" step="1"/>
+                                               type="number" min="1" th:attr="max=${book.inStockNumber}" name="qty" value="1" step="1"/>
                                     </div>
                                     <div class="col-xs-6">
                                         <h4 th:if="*{book.inStockNumber&gt;10}" style="color: green">In Stock</h4>

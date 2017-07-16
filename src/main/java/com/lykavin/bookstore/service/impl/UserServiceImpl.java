@@ -3,6 +3,7 @@ package com.lykavin.bookstore.service.impl;
 import com.lykavin.bookstore.model.PasswordResetToken;
 import com.lykavin.bookstore.model.RoleEntity;
 import com.lykavin.bookstore.model.UserEntity;
+import com.lykavin.bookstore.model.order.ShoppingCart;
 import com.lykavin.bookstore.model.user.UserBilling;
 import com.lykavin.bookstore.model.user.UserPayment;
 import com.lykavin.bookstore.model.user.UserShipping;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService {
     private UserPaymentRepository paymentRepository;
     @Autowired
     private UserShippingRepository shippingRepository;
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @Override
     public PasswordResetToken getPasswordResetToken(final String token){
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity createUser(UserEntity user, Set<RoleEntity> userRoles) throws Exception{
         UserEntity localUser = userRepository.findByUsername(user.getUsername());
         if(localUser != null){
-            LOG.info("user {} already exists. nothing will be done.", user.getName());
+            LOG.info("user {} already exists. Will check shopping cart.", user.getName());
             // throw new Exception("user already exists. nothing will be done.");
         } else{
             for(RoleEntity role : userRoles){
@@ -71,14 +75,24 @@ public class UserServiceImpl implements UserService {
                 roleRepository.save(role);
             }
             user.setRoles(userRoles);
-            localUser = userRepository.save(user);
 
+            ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
+            user.setShoppingCart(shoppingCart);
+
+            user.setShippingAddresses(new ArrayList<UserShipping>());
+            user.setPayments(new ArrayList<UserPayment>());
+
+            localUser = userRepository.save(user);
         }
+
         return localUser;
     }
 
+
     @Override
     public void updateUserBilling(UserBilling userBilling, UserPayment userPayment, UserEntity user) {
+
 
         userPayment.setUser(user);
         userPayment.setUserBilling(userBilling);

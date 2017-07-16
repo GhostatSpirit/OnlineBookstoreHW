@@ -1,10 +1,12 @@
 package com.lykavin.bookstore.model;
 
+import com.lykavin.bookstore.model.order.CartItem;
 import com.lykavin.bookstore.model.order.OrderEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by lykav on 2017/4/23.
@@ -39,7 +41,7 @@ public class BookEntity {
     private MultipartFile bookImage;
 
 
-    private Collection<OrderEntity> orders;
+    private List<CartItem> cartItems;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -186,12 +188,13 @@ public class BookEntity {
     }
 
 
-    @OneToMany(mappedBy = "bookByBid")
-    public Collection<OrderEntity> getOrders() {
-        return orders;
+    @OneToMany(mappedBy = "book")
+    public List<CartItem> getCartItems() {
+        return cartItems;
     }
 
-    public void setOrders(Collection<OrderEntity> orders) {
-        this.orders = orders;
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
+
 }

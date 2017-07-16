@@ -1,6 +1,7 @@
 package com.lykavin.bookstore.model;
 
 import com.lykavin.bookstore.model.order.OrderEntity;
+import com.lykavin.bookstore.model.order.ShoppingCart;
 import com.lykavin.bookstore.model.user.UserPayment;
 import com.lykavin.bookstore.model.user.UserShipping;
 import com.lykavin.bookstore.security.Authority;
@@ -30,16 +31,16 @@ public class UserEntity implements UserDetails {
     private String phone;
     private String address;
 
-    private Collection<OrderEntity> orders;
     private Collection<RoleEntity> roles;
 
-    private boolean enabled=true;
-
-
     private List<UserShipping> shippingAddresses;
-
     private List<UserPayment> payments;
 
+    private ShoppingCart shoppingCart;
+    private List<OrderEntity> orders;
+
+
+    private boolean enabled=true;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,16 +105,6 @@ public class UserEntity implements UserDetails {
     }
 
 
-
-    @OneToMany(mappedBy = "userByUid")
-    public Collection<OrderEntity> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Collection<OrderEntity> orders) {
-        this.orders = orders;
-    }
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     public List<UserShipping> getShippingAddresses() {
         return shippingAddresses;
@@ -130,6 +121,25 @@ public class UserEntity implements UserDetails {
 
     public void setPayments(List<UserPayment> payments) {
         this.payments = payments;
+    }
+
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
+
+    @OneToMany(mappedBy = "user")
+    public List<OrderEntity> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<OrderEntity> orders) {
+        this.orders = orders;
     }
 
     @ManyToMany

@@ -23,7 +23,7 @@ public class Payment {
     @JoinColumn(name="order_id")
     private OrderEntity order;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userPayment")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "payment")
     private BillingAddress billingAddress;
 
     public Long getId() {

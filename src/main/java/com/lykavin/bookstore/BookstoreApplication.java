@@ -2,17 +2,24 @@ package com.lykavin.bookstore;
 
 import com.lykavin.bookstore.model.RoleEntity;
 import com.lykavin.bookstore.model.UserEntity;
+import com.lykavin.bookstore.model.order.ShoppingCart;
 import com.lykavin.bookstore.repository.RoleRepository;
+import com.lykavin.bookstore.repository.ShoppingCartRepository;
 import com.lykavin.bookstore.repository.UserRepository;
+import com.lykavin.bookstore.service.UserService;
 import com.lykavin.bookstore.utility.SecurityUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
+@Transactional
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
 
@@ -20,6 +27,10 @@ public class BookstoreApplication implements CommandLineRunner {
 	RoleRepository roleRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	ShoppingCartRepository shoppingCartRepository;
+	@Autowired
+	UserService userService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BookstoreApplication.class, args);
@@ -47,6 +58,16 @@ public class BookstoreApplication implements CommandLineRunner {
 
 	}
 
+	public ShoppingCart checkCreateCart(UserEntity user){
+		ShoppingCart cart = user.getShoppingCart();
+		if(cart == null){
+			ShoppingCart newCart = new ShoppingCart();
+			newCart.setUser(user);
+			cart = shoppingCartRepository.save(newCart);
+		}
+		return cart;
+	}
+
 	private RoleEntity initializeRole(final String roleName){
 		RoleEntity targetRole = roleRepository.findByName(roleName);
 		if(targetRole == null){
@@ -63,6 +84,7 @@ public class BookstoreApplication implements CommandLineRunner {
 			 Collection<RoleEntity> roles){
         UserEntity user = userRepository.findByUsername(username);
 		if(user != null) {
+			checkCreateCart(user);
 			return user;
 		}
 
@@ -73,7 +95,14 @@ public class BookstoreApplication implements CommandLineRunner {
 		user.setPhone(phone);
 		user.setRoles(roles);
 
-		user = userRepository.saveAndFlush(user);
+		Set<RoleEntity> roleSet = new HashSet<>(roles);
+
+		try{
+			user = userService.createUser(user, roleSet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return user;
 	}
 
@@ -81,6 +110,7 @@ public class BookstoreApplication implements CommandLineRunner {
 			(String username, String password, Collection<RoleEntity> roles){
 		UserEntity user = userRepository.findByUsername(username);
 		if(user != null) {
+			checkCreateCart(user);
 			return user;
 		}
 		user = new UserEntity();
@@ -88,7 +118,16 @@ public class BookstoreApplication implements CommandLineRunner {
 		user.setPassword(SecurityUtility.passwordEncoder().encode(password));
 		user.setRoles(roles);
 
-		user = userRepository.saveAndFlush(user);
+		Set<RoleEntity> roleSet = new HashSet<>(roles);
+
+		try{
+			user = userService.createUser(user, roleSet);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+
 		return user;
 	}
 
