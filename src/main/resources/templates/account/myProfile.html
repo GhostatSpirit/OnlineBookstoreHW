@@ -460,21 +460,6 @@
                                                         <div class="col-xs-6">
                                                             <select class="form-control" name="expiryMonth"
                                                                     required="required" th:field="${userPayment.expiryMonth}">
-                                                                <!--<option value="" disabled="disabled">&#45;&#45; Month &#45;&#45;</option>-->
-                                                                <!--<option value="1" th:selected="(${userPayment.expiryMonth} == 1)">Jan (01)</option>-->
-                                                                <!--<option value="2" th:selected="(${userPayment.expiryMonth} == 2)">Feb (02)</option>-->
-                                                                <!--<option value="3" th:selected="(${userPayment.expiryMonth} == 3)">Mar (03)</option>-->
-                                                                <!--<option value="4" th:selected="(${userPayment.expiryMonth} == 4)">Apr (04)</option>-->
-                                                                <!--<option value="5" th:selected="(${userPayment.expiryMonth} == 5)">May (05)</option>-->
-                                                                <!--<option value="6" th:selected="(${userPayment.expiryMonth} == 6)">June (06)</option>-->
-                                                                <!--<option value="7" th:selected="(${userPayment.expiryMonth} == 7)">July (07)</option>-->
-                                                                <!--<option value="8" th:selected="(${userPayment.expiryMonth} == 8)">Aug (08)</option>-->
-                                                                <!--<option value="9" th:selected="(${userPayment.expiryMonth} == 9)">Sep (09)</option>-->
-                                                                <!--<option value="10" th:selected="(${userPayment.expiryMonth} == 10)">Oct (10)</option>-->
-                                                                <!--<option value="11" th:selected="(${userPayment.expiryMonth} == 11)">Nov (11)</option>-->
-                                                                <!--<option value="12" th:selected="(${userPayment.expiryMonth} == 12)">Dec (12)</option>-->
-
-                                                                <!--<option value="" disabled="disabled">&#45;&#45; Month &#45;&#45;</option>-->
                                                                 <option value="1">Jan (01)</option>
                                                                 <option value="2">Feb (02)</option>
                                                                 <option value="3">Mar (03)</option>
@@ -492,8 +477,6 @@
                                                         <div class="col-xs-6">
                                                             <select class="form-control" name="expiryYear"
                                                                     required="required" th:field="${userPayment.expiryYear}">
-                                                                    <!--th:field="${userPayment.expiryYear}" >-->
-                                                                <!--<option value="" disabled="disabled">&#45;&#45; Year &#45;&#45;</option>-->
                                                                 <option value="2017">2017</option>
                                                                 <option value="2018">2018</option>
                                                                 <option value="2019">2019</option>
@@ -543,17 +526,17 @@
 
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item active"><a
-                                            th:href="@{/profile/shippingAddresses}"
+                                            th:href="@{/profile/addresses}"
                                             th:style="${listOfShippingAddresses}? 'color:red'">List
                                         of Shipping Addresses</a></li>
                                     <li class="breadcrumb-item active"><a
-                                            th:href="@{/profile/shippingAddresses/add}"
+                                            th:href="@{/profile/addresses/add}"
                                             th:style="${addNewShippingAddress}? 'color:red'">Add(Update)
                                         Shipping Address</a></li>
                                 </ol>
 
                                 <div th:if="${listOfShippingAddresses}">
-                                    <form th:action="@{/profile/shippingAddresses/setDefault}" method="post">
+                                    <form th:action="@{/profile/addresses/setDefault}" method="post">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -570,12 +553,12 @@
                                                            th:checked="${userShipping.default}"/><span>default</span>
                                                 </td>
                                                 <td
-                                                        th:text="${userShipping.street}+', '+
-														${userShipping.city}+', '+${userShipping.state}"></td>
+                                                        th:text="${userShipping.state}+', '+
+														${userShipping.city}+', '+${userShipping.street}"></td>
                                                 <td><a
-                                                        th:href="@{/profile/shippingAddresses/update(id=${userShipping.id})}"><i
+                                                        th:href="@{/profile/addresses/update(id=${userShipping.id})}"><i
                                                         class="fa fa-pencil"></i></a>&nbsp;&nbsp;<a
-                                                        th:href="@{/profile/shippingAddresses/remove(id=${userShipping.id})}"><i
+                                                        th:href="@{/profile/addresses/remove(id=${userShipping.id})}"><i
                                                         class="fa fa-times"></i></a></td>
                                             </tr>
                                             </tbody>
@@ -585,7 +568,7 @@
                                 </div>
 
                                 <div th:if="${addNewShippingAddress}">
-                                    <form th:action="@{/profile/shippingAddresses/add}" method="post">
+                                    <form th:action="@{/profile/addresses/add}" method="post">
                                         <div class="bg-info" th:if="${updateUserShippingInfo}">User
                                             info updated.
                                         </div>
@@ -620,24 +603,18 @@
                                                 <div class="form-group">
                                                     <label for="shippingCity">* City</label> <input
                                                         type="text" class="form-control" id="shippingCity"
-                                                        placeholder="Shipping City" th:name="city "
+                                                        placeholder="Shipping City" th:name="city"
                                                         required="required"
                                                         th:value="${userShipping.city}"/>
                                                 </div>
                                             </div>
                                             <div class="col-xs-4">
                                                 <div class="form-group">
-                                                    <label for="shippingState">* State</label> <select
-                                                        id="shippingState" class="form-control"
-                                                        th:name="state"
-                                                        th:value="${userShipping.state}"
-                                                        required="required">
-                                                    <option value="" disabled="disabled">Please
-                                                        select an option
-                                                    </option>
-                                                    <option th:each="state : ${stateList}" th:text="${state}"
-                                                            th:selected="(${userShipping.state}==${state})"></option>
-                                                </select>
+                                                    <label for="shippingState">* State</label> <input
+                                                        type="text" class="form-control" id="shippingState"
+                                                        placeholder="Shipping State" th:name="state"
+                                                        required="required"
+                                                        th:value="${userShipping.state}"/>
                                                 </div>
                                             </div>
                                             <div class="col-xs-4">
@@ -652,9 +629,7 @@
                                         </div>
 
                                         <hr/>
-                                        <button type="submit" class="btn btn-primary btn-lg">Save
-                                            All
-                                        </button>
+                                        <button type="submit" class="btn btn-primary btn-lg">Save All</button>
                                     </form>
                                 </div>
                             </div>

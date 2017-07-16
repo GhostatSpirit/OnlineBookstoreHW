@@ -1,4 +1,4 @@
-package com.lykavin.bookstore.controller;
+package com.lykavin.bookstore.controller.profile;
 
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.model.user.UserBilling;
@@ -24,37 +24,13 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/profile")
-public class ProfileController {
+public class PaymentProfileController {
 
     @Autowired
     UserService userService;
 
     @Autowired
     UserPaymentService userPaymentService;
-
-    @RequestMapping("")
-    public String myProfile(Model model, Principal principal){
-        UserEntity user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("userPaymentList", user.getPayments());
-        model.addAttribute("userShippingList", user.getShippingAddresses());
-
-//        model.addAttribute("orderList", user.getOrders());
-
-//        UserShipping userShipping = new userShipping();
-//        model.addAttribute("userShipping", userShipping);
-
-        model.addAttribute("listOfCreditCards", true);
-        model.addAttribute("listOfShippingAddress", true);
-
-//        List<String> stateList = USConstants.listOfUSStatesCode;
-//        Collection.sort(stateList);
-//        model.addAttribute("stateList", stateList);
-        model.addAttribute("classActiveEdit", true);
-
-        return "/account/myProfile";
-    }
-
 
     @RequestMapping("/creditCards")
     public String listOfCreditCards(
@@ -73,22 +49,7 @@ public class ProfileController {
         return "/account/myProfile";
     }
 
-    @RequestMapping("/shippingAddresses")
-    public String listOfShippingAddresses(
-            Model model, Principal principal, HttpServletRequest request
-    ) {
-        UserEntity user = userService.findByUsername(principal.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("userPaymentList", user.getPayments());
-        model.addAttribute("userShippingList", user.getShippingAddresses());
-		/*model.addAttribute("orderList", user.orderList());*/
 
-        model.addAttribute("listOfCreditCards", true);
-        model.addAttribute("classActiveBilling", true);
-        model.addAttribute("listOfShippingAddresses", true);
-
-        return "/account/myProfile";
-    }
 
     @RequestMapping(value = "/creditCards/add", method = RequestMethod.GET)
     public String addNewCreditCard(
@@ -210,8 +171,6 @@ public class ProfileController {
         return "redirect:/profile/creditCards";
 
     }
-
-
 
     @RequestMapping("/shippingAddresses/add")
     public String addNewShippingAddress(
