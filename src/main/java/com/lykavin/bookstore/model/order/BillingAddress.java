@@ -1,31 +1,24 @@
-package com.lykavin.bookstore.model.user;
-
-import com.lykavin.bookstore.model.UserEntity;
+package com.lykavin.bookstore.model.order;
 
 import javax.persistence.*;
 
 /**
- * Created by lykav on 7/16/2017.
+ * Created by lykav on 7/17/2017.
  */
 @Entity
-public class UserShipping {
-
+public class BillingAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String phone;
     private String street;
     private String city;
     private String state;
     private String country;
     private String zipcode;
 
-    private boolean defaultShipping;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private UserEntity user;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Payment payment;
 
     public Long getId() {
         return id;
@@ -41,14 +34,6 @@ public class UserShipping {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getStreet() {
@@ -83,14 +68,6 @@ public class UserShipping {
         this.country = country;
     }
 
-    public boolean isDefaultShipping() {
-        return defaultShipping;
-    }
-
-    public void setDefaultShipping(boolean defaultShipping) {
-        this.defaultShipping = defaultShipping;
-    }
-
     public String getZipcode() {
         return zipcode;
     }
@@ -99,26 +76,11 @@ public class UserShipping {
         this.zipcode = zipcode;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserShipping that = (UserShipping) o;
-
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

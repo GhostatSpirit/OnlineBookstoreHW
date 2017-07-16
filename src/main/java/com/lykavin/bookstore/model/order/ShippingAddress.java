@@ -1,14 +1,12 @@
-package com.lykavin.bookstore.model.user;
-
-import com.lykavin.bookstore.model.UserEntity;
+package com.lykavin.bookstore.model.order;
 
 import javax.persistence.*;
 
 /**
- * Created by lykav on 7/16/2017.
+ * Created by lykav on 7/17/2017.
  */
 @Entity
-public class UserShipping {
+public class ShippingAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +22,8 @@ public class UserShipping {
     private boolean defaultShipping;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private UserEntity user;
+    @JoinColumn(name="order_id")
+    private OrderEntity order;
 
     public Long getId() {
         return id;
@@ -99,26 +97,11 @@ public class UserShipping {
         this.zipcode = zipcode;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public OrderEntity getOrder() {
+        return order;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        UserShipping that = (UserShipping) o;
-
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 }

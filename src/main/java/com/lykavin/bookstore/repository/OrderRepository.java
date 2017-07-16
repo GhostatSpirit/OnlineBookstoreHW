@@ -1,12 +1,8 @@
 package com.lykavin.bookstore.repository;
 
-import com.lykavin.bookstore.model.OrderEntity;
+import com.lykavin.bookstore.model.order.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by lykav on 2017/4/23.

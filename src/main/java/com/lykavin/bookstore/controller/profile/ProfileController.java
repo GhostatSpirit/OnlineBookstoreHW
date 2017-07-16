@@ -32,7 +32,7 @@ public class ProfileController {
 //        model.addAttribute("userShipping", userShipping);
 
         model.addAttribute("listOfCreditCards", true);
-        model.addAttribute("listOfShippingAddress", true);
+        model.addAttribute("listOfShippingAddresses", true);
 
 //        List<String> stateList = USConstants.listOfUSStatesCode;
 //        Collection.sort(stateList);

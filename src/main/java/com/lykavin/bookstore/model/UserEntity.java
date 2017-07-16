@@ -1,5 +1,6 @@
 package com.lykavin.bookstore.model;
 
+import com.lykavin.bookstore.model.order.OrderEntity;
 import com.lykavin.bookstore.model.user.UserPayment;
 import com.lykavin.bookstore.model.user.UserShipping;
 import com.lykavin.bookstore.security.Authority;

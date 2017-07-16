@@ -5,6 +5,7 @@ import com.lykavin.bookstore.model.RoleEntity;
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.model.user.UserBilling;
 import com.lykavin.bookstore.model.user.UserPayment;
+import com.lykavin.bookstore.model.user.UserShipping;
 
 import java.util.Set;
 
@@ -24,6 +25,8 @@ public interface UserService {
     UserEntity createUser(UserEntity user, Set<RoleEntity> userRoles) throws Exception;
 
     void updateUserBilling(UserBilling userBilling, UserPayment userPayment, UserEntity user);
-
     void setUserDefaultPayment(Long defaultPaymentId, UserEntity user);
+
+    void updateUserShipping(UserShipping userShipping, UserEntity user);
+    void setUserDefaultShipping(Long defaultShippingId, UserEntity user);
 }

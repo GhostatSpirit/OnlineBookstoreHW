@@ -5,10 +5,8 @@ import com.lykavin.bookstore.model.RoleEntity;
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.model.user.UserBilling;
 import com.lykavin.bookstore.model.user.UserPayment;
-import com.lykavin.bookstore.repository.PasswordResetTokenRepository;
-import com.lykavin.bookstore.repository.RoleRepository;
-import com.lykavin.bookstore.repository.UserPaymentRepository;
-import com.lykavin.bookstore.repository.UserRepository;
+import com.lykavin.bookstore.model.user.UserShipping;
+import com.lykavin.bookstore.repository.*;
 import com.lykavin.bookstore.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +28,14 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordResetTokenRepository passwordResetTokenRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private UserPaymentRepository paymentRepository;
+    @Autowired
+    private UserShippingRepository shippingRepository;
 
     @Override
     public PasswordResetToken getPasswordResetToken(final String token){
@@ -106,16 +103,60 @@ public class UserServiceImpl implements UserService {
     public void setUserDefaultPayment(Long defaultPaymentId, UserEntity user) {
         List<UserPayment> userPaymentList = paymentRepository.findAll();
 
+        boolean hasDefault = false;
+        for(UserPayment payment : userPaymentList){
+            if(payment.getId().equals(defaultPaymentId)){
+                hasDefault = true;
+                break;
+            }
+        }
 
-
-        for(UserPayment userPayment : userPaymentList){
-            if(userPayment.getId() == defaultPaymentId){
-                userPayment.setDefaultPayment(true);
-                paymentRepository.save(userPayment);
-            } else {
-                if(userPayment.isDefaultPayment()) {
-                    userPayment.setDefaultPayment(false);
+        if(hasDefault) {
+            for (UserPayment userPayment : userPaymentList) {
+                if (userPayment.getId().equals(defaultPaymentId)) {
+                    userPayment.setDefaultPayment(true);
                     paymentRepository.save(userPayment);
+                } else {
+                    if (userPayment.isDefaultPayment()) {
+                        userPayment.setDefaultPayment(false);
+                        paymentRepository.save(userPayment);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateUserShipping(UserShipping userShipping, UserEntity user) {
+        userShipping.setUser(user);
+        if(user.getShippingAddresses().isEmpty()){
+            userShipping.setDefaultShipping(true);
+        }
+        shippingRepository.save(userShipping);
+    }
+
+    @Override
+    public void setUserDefaultShipping(Long defaultShippingId, UserEntity user) {
+        List<UserShipping> userShippingList = shippingRepository.findAll();
+
+        boolean hasDefault = false;
+        for(UserShipping shipping : userShippingList) {
+            if(shipping.getId().equals(defaultShippingId)){
+                hasDefault = true;
+                break;
+            }
+        }
+
+        if(hasDefault) {
+            for (UserShipping shipping : userShippingList) {
+                if (shipping.getId().equals(defaultShippingId)) {
+                    shipping.setDefaultShipping(true);
+                    shippingRepository.save(shipping);
+                } else {
+                    if (shipping.isDefaultShipping()) {
+                        shipping.setDefaultShipping(false);
+                        shippingRepository.save(shipping);
+                    }
                 }
             }
         }

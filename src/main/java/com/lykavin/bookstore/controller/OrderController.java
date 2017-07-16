@@ -1,7 +1,7 @@
 package com.lykavin.bookstore.controller;
 
 import com.lykavin.bookstore.model.BookEntity;
-import com.lykavin.bookstore.model.OrderEntity;
+import com.lykavin.bookstore.model.order.OrderEntity;
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.repository.BookRepository;
 import com.lykavin.bookstore.repository.OrderRepository;

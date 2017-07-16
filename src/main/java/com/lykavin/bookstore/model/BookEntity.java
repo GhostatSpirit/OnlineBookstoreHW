@@ -1,9 +1,9 @@
 package com.lykavin.bookstore.model;
 
+import com.lykavin.bookstore.model.order.OrderEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Collection;
 
 /**
