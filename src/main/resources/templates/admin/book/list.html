@@ -33,6 +33,7 @@
                      </span>
                 </td>
                 <td th:text="${book.active}"></td>
+                <td>delete</td>
             </tr>
             </tbody>
         </table>
@@ -40,6 +41,16 @@
 
 
     <div th:replace="common/adminHeader :: body-bottom-scripts" />
+
+    <script>
+        $(document).ready(function() {
+            $("#bookListTable").DataTable({
+                "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "All"]],
+                "ordering": false,
+                stateSave:true
+            });
+        });
+    </script>
 </head>
 <body>
 

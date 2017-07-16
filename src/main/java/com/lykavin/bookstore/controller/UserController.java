@@ -62,7 +62,7 @@ public class UserController {
     // @PathVariable可以收集url中的变量，需匹配的变量用{}括起来
     // 例如：访问 localhost:8080/admin/users/show/1 ，将匹配 id = 1
     @RequestMapping(value = "/admin/users/show/{id}", method = RequestMethod.GET)
-    public String showUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
+    public String showUser(@PathVariable("id") Long userId, ModelMap modelMap) {
 
         // 找到userId所表示的用户
         UserEntity userEntity = userRepository.findOne(userId);
@@ -74,7 +74,7 @@ public class UserController {
 
     // 更新用户信息 页面
     @RequestMapping(value = "/admin/users/update/{id}", method = RequestMethod.GET)
-    public String updateUser(@PathVariable("id") Integer userId, ModelMap modelMap) {
+    public String updateUser(@PathVariable("id") Long userId, ModelMap modelMap) {
 
         // 找到userId所表示的用户
         UserEntity userEntity = userRepository.findOne(userId);
@@ -83,24 +83,24 @@ public class UserController {
         modelMap.addAttribute("user", userEntity);
         return "admin/userOps/updateUser";
     }
-
-    // 更新用户信息 操作
-    @RequestMapping(value = "/admin/users/updateP", method = RequestMethod.POST)
-    public String updateUserPost(@ModelAttribute("user") @Valid UserEntity user, BindingResult result) {
-
-        if(!result.hasErrors()) {
-            // 更新用户信息
-            userRepository.updateUser(user.getEmail(), user.getPassword(),
-                    user.getName(), user.getPhone(), user.getAddress(), user.getId());
-            userRepository.flush(); // 刷新缓冲区
-        }
-
-        return "redirect:/admin/users";
-    }
+//
+//    // 更新用户信息 操作
+//    @RequestMapping(value = "/admin/users/updateP", method = RequestMethod.POST)
+//    public String updateUserPost(@ModelAttribute("user") @Valid UserEntity user, BindingResult result) {
+//
+//        if(!result.hasErrors()) {
+//            // 更新用户信息
+//            userRepository.updateUser(user.getEmail(), user.getPassword(),
+//                    user.getName(), user.getPhone(), user.getAddress(), user.getId());
+//            userRepository.flush(); // 刷新缓冲区
+//        }
+//
+//        return "redirect:/admin/users";
+//    }
 
     // 删除用户
     @RequestMapping(value = "/admin/users/delete/{id}", method = RequestMethod.GET)
-    public String deleteUser(@PathVariable("id") Integer userId) {
+    public String deleteUser(@PathVariable("id") Long userId) {
 
         // 删除id为userId的用户
         userRepository.delete(userId);

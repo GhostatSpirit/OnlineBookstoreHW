@@ -22,10 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * Created by lykav on 2017/6/1.
@@ -158,4 +156,6 @@ public class AccountController {
         model.addAttribute("classActiveEdit", true);
         return prefix + "myProfile";
     }
+
+
 }

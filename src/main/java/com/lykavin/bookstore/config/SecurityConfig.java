@@ -55,12 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().permitAll();
-                //.anyRequest().authenticated();
+                //.anyRequest().permitAll();
+                .anyRequest().authenticated();
 
 
         http
-                .csrf().disable()
+                .csrf().disable().cors().disable()
                 .formLogin().failureUrl("/login?error").defaultSuccessUrl("/")
                 .loginPage("/login").permitAll()
                 .and()

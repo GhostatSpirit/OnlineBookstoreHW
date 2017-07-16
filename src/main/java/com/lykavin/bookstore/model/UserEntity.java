@@ -1,5 +1,7 @@
 package com.lykavin.bookstore.model;
 
+import com.lykavin.bookstore.model.user.UserPayment;
+import com.lykavin.bookstore.model.user.UserShipping;
 import com.lykavin.bookstore.security.Authority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +33,12 @@ public class UserEntity implements UserDetails {
     private Collection<RoleEntity> roles;
 
     private boolean enabled=true;
+
+
+    private List<UserShipping> shippingAddresses;
+
+    private List<UserPayment> payments;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,6 +113,23 @@ public class UserEntity implements UserDetails {
         this.orders = orders;
     }
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public List<UserShipping> getShippingAddresses() {
+        return shippingAddresses;
+    }
+
+    public void setShippingAddresses(List<UserShipping> shippingAddresses) {
+        this.shippingAddresses = shippingAddresses;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    public List<UserPayment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<UserPayment> payments) {
+        this.payments = payments;
+    }
 
     @ManyToMany
     @JoinTable(name = "userRole", joinColumns = @JoinColumn(name = "uid"), inverseJoinColumns = @JoinColumn(name = "role_id"))

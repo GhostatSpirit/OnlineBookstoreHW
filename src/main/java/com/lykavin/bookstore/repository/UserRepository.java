@@ -12,20 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by lykav on 201a7/4/23.
  */
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity findByEmail(String email);
 
     UserEntity findByUsername(String username);
 
     // define a updateUser() method
-    @Modifying
-    @Transactional
-    @Query("update UserEntity us " +
-            "set us.email=:qEmail, us.password=:qPassword, " +
-                "us.name=:qName, us.phone=:qPhone, us.address=:qAddress " +
-            "where us.id=:qUid")
-    void updateUser(@Param("qEmail") String email, @Param("qPassword") String password,
-                    @Param("qName") String name, @Param("qPhone") String phone,
-                    @Param("qAddress") String address, @Param("qUid") Long uid);
+//    @Modifying
+//    @Transactional
+//    @Query("update UserEntity us " +
+//            "set us.email=:qEmail, us.password=:qPassword, " +
+//                "us.name=:qName, us.phone=:qPhone, us.address=:qAddress " +
+//            "where us.id=:qUid")
+//    void updateUser(@Param("qEmail") String email, @Param("qPassword") String password,
+//                    @Param("qName") String name, @Param("qPhone") String phone,
+//                    @Param("qAddress") String address, @Param("qUid") Long uid);
 }

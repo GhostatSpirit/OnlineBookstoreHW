@@ -55,8 +55,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/shoppingCart/cart}">SHOPPING CART</a></li>
-                    <li><a sec:authorize="isAnonymous()" th:href="@{/login}">MYACCOUNT</a></li>
+                    <li><a sec:authorize="hasRole('ROLE_USER')" th:href="@{/profile}">MYACCOUNT</a></li>
                     <li><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">PORTAL</a></li>
+                    <li><a sec:authorize="isAnonymous()" th:href="@{/login}">LOGIN</a></li>
                     <li><a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a></li>
                 </ul>
             </div>
