@@ -1,5 +1,6 @@
 package com.lykavin.bookstore.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lykavin.bookstore.model.UserEntity;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class UserShipping {
 
     private boolean defaultShipping;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
     private UserEntity user;

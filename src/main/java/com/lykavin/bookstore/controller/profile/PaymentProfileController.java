@@ -40,7 +40,7 @@ public class PaymentProfileController {
         model.addAttribute("user", user);
         model.addAttribute("userPaymentList", user.getPayments());
         model.addAttribute("userShippingList", user.getShippingAddresses());
-		/*model.addAttribute("orderList", user.orderList());*/
+		model.addAttribute("orderList", user.getOrders());
 
         model.addAttribute("listOfCreditCards", true);
         model.addAttribute("classActiveBilling", true);

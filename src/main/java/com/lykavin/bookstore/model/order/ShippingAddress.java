@@ -1,5 +1,7 @@
 package com.lykavin.bookstore.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -21,6 +23,7 @@ public class ShippingAddress {
 
     private boolean defaultShipping;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="order_id")
     private OrderEntity order;

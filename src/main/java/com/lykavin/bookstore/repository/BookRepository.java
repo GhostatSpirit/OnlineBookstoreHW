@@ -9,21 +9,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by lykav on 2017/4/23.
  */
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
-//
-//    @Modifying
-//    @Transactional
-//    @Query("update BookEntity book " +
-//            "set book.title=:qTitle, book.price=:qPrice, " +
-//            "book.description=:qDescription, book.author=:qAuthor, " +
-//            "book.img=:qImg " +
-//            "where book.bid=:qBid")
-//    void updateBook(@Param("qTitle") String title, @Param("qPrice") int price,
-//                    @Param("qDescription") String description, @Param("qAuthor") String author,
-//                    @Param("qImg") String img, @Param("qBid") Integer bid);
+
+    List<BookEntity> findByCategory(String category);
+
+    List<BookEntity> findByTitleContaining(String title);
 }

@@ -3,6 +3,7 @@ package com.lykavin.bookstore.service.impl;
 import com.lykavin.bookstore.model.BookEntity;
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.model.order.CartItem;
+import com.lykavin.bookstore.model.order.OrderEntity;
 import com.lykavin.bookstore.model.order.ShoppingCart;
 import com.lykavin.bookstore.repository.CartItemRepository;
 import com.lykavin.bookstore.service.CartItemService;
@@ -67,4 +68,16 @@ public class CartItemServiceImpl implements CartItemService {
     public void removeCartItem(CartItem cartItem) {
         cartItemRepository.delete(cartItem);
     }
+
+    @Override
+    public CartItem save(CartItem cartItem) {
+        return cartItemRepository.save(cartItem);
+    }
+
+    @Override
+    public List<CartItem> findByOrder(OrderEntity order) {
+        return cartItemRepository.findByOrder(order);
+    }
+
+
 }

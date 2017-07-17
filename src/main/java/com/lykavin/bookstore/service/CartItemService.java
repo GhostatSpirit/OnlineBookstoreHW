@@ -3,6 +3,7 @@ package com.lykavin.bookstore.service;
 import com.lykavin.bookstore.model.BookEntity;
 import com.lykavin.bookstore.model.UserEntity;
 import com.lykavin.bookstore.model.order.CartItem;
+import com.lykavin.bookstore.model.order.OrderEntity;
 import com.lykavin.bookstore.model.order.ShoppingCart;
 
 import java.awt.print.Book;
@@ -21,4 +22,8 @@ public interface CartItemService {
     CartItem findById(Long id);
 
     void removeCartItem(CartItem cartItem);
+
+    CartItem save(CartItem cartItem);
+
+    List<CartItem> findByOrder(OrderEntity order);
 }

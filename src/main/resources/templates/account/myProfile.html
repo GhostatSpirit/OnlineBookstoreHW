@@ -55,7 +55,7 @@
                                     <strong>Update Success!</strong>
                                 </div>
 
-                                <form th:action="@{/profile/userInfo}" method="post">
+                                <form th:action="@{/profile/updateUser}" method="post">
                                     <input type="hidden" name="id" th:value="${user.id}"/>
 
                                     <div class="bg-info" th:if="${updateUserInfo}">User info updated.</div>
@@ -65,7 +65,7 @@
                                             <div class="col-xs-6">
                                                 <label for="Name">Name</label> <input
                                                     type="text" class="form-control" id="Name"
-                                                    name="Name" th:value="${user.name}"/>
+                                                    name="name" th:value="${user.name}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +137,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="order : ${orderList}">
-                                        <td><a th:href="@{/profile/orderDetail(id=${order.id})}"><span
+                                        <td><a th:href="@{/profile/order(id=${order.id})}"><span
                                                 th:text="${order.orderDate}"></span></a></td>
                                         <td data-th-text="${order.id}"></td>
                                         <td data-th-text="${order.orderTotal}"></td>
@@ -164,15 +164,15 @@
                                                         </div>
                                                         <div class="panel-body">
                                                             <span
-                                                                    th:text="${order.billingAddress.name}"></span><br/>
+                                                                    th:text="${order.payment.billingAddress.name}"></span><br/>
                                                             <span
-                                                                    th:text="${order.billingAddress.street}"></span><br/>
+                                                                    th:text="${order.payment.billingAddress.street}"></span><br/>
                                                             <span
-                                                                    th:text="${order.billingAddress.city}"></span><br/>
+                                                                    th:text="${order.payment.billingAddress.city}"></span><br/>
                                                             <span
-                                                                    th:text="${order.billingAddress.state}"></span><br/>
+                                                                    th:text="${order.payment.billingAddress.state}"></span><br/>
                                                             <span
-                                                                    th:text="${order.billingAddress.zipcode}"></span><br/>
+                                                                    th:text="${order.payment.billingAddress.zipcode}"></span><br/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -194,7 +194,7 @@
                                                 <div class="col-xs-4">
                                                     <div class="panel panel-default height">
                                                         <div class="panel-heading">
-                                                            <strong>Billing Details</strong>
+                                                            <strong>Shipping Details</strong>
                                                         </div>
                                                         <div class="panel-body">
                                                             <span
@@ -238,10 +238,10 @@
                                                         <tr th:each="cartItem : ${cartItemList}">
                                                             <td data-th-text="${cartItem.book.title}"></td>
                                                             <td class="text-center"
-                                                                data-th-text="${cartItem.book.ourPrice}"></td>
+                                                                data-th-text="${#numbers.formatDecimal(cartItem.book.ourPrice / 100.0,0,2)}"></td>
                                                             <td class="text-center" data-th-text="${cartItem.qty}"></td>
                                                             <td class="text-center"
-                                                                data-th-text="${cartItem.subtotal}"></td>
+                                                                data-th-text="${#numbers.formatDecimal(cartItem.subtotal / 100.0,0,2)}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="highrow"></td>
@@ -249,14 +249,14 @@
                                                             <td class="highrow text-center"><strong>Subtotal</strong>
                                                             </td>
                                                             <td class="highrow text-right"
-                                                                data-th-text="${order.orderTotal}"></td>
+                                                                data-th-text="${#numbers.formatDecimal(order.orderTotal / 100.0,0,2)}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="emptyrow"></td>
                                                             <td class="emptyrow"></td>
                                                             <td class="emptyrow text-center"><strong>Tax</strong></td>
                                                             <td class="emptyrow text-right"
-                                                                data-th-text="${#numbers.formatDecimal(order.orderTotal*0.06,0,2)}"></td>
+                                                                data-th-text="${#numbers.formatDecimal(order.orderTotal*0.06 / 100.0,0,2)}"></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="emptyrow"><i
@@ -264,7 +264,7 @@
                                                             <td class="emptyrow"></td>
                                                             <td class="emptyrow text-center"><strong>Total</strong></td>
                                                             <td
-                                                                    th:with="total=${order.orderTotal+order.orderTotal*0.06}"
+                                                                    th:with="total=${(order.orderTotal+order.orderTotal*0.06) / 100.0}"
                                                                     data-th-text="${#numbers.formatDecimal(total, 0, 2)}"
                                                                     class="emptyrow text-right"></td>
                                                         </tr>

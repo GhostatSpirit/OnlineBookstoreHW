@@ -38,4 +38,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setGrandTotal(cartTotal);
         return shoppingCartRepository.save(shoppingCart);
     }
+
+    @Override
+    public void clearShoppingCart(ShoppingCart shoppingCart) {
+        List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
+
+        for (CartItem cartItem : cartItemList) {
+            cartItem.setShoppingCart(null);
+            cartItemService.save(cartItem);
+        }
+
+        shoppingCart.setGrandTotal(0);
+
+        shoppingCartRepository.save(shoppingCart);
+    }
 }

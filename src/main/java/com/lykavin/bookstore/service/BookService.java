@@ -13,4 +13,8 @@ public interface BookService {
     BookEntity findOne(Long id);
     List<BookEntity> findAll();
 
+
+    List<BookEntity> findByCategory(String category);
+
+    List<BookEntity> blurrySearch(String title);
 }

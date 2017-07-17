@@ -18,6 +18,9 @@ public interface UserService {
 
     void createPasswordResetTokenForUser(final UserEntity user, final String token);
 
+    UserEntity findById(Long id);
+    UserEntity save(UserEntity user);
+
     UserEntity findByUsername(String username);
 
     UserEntity findByEmail(String email);
